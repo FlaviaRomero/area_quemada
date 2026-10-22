@@ -1,0 +1,552 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>¿Qué se quemó en el Perú?</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Public+Sans:wght@400..700&display=swap">
+<style>
+/* Layout: parte de situación nacional sobre fondo oscuro. Barra fija, titular y cifras, cobertura quemada, regiones naturales, departamentos, temporada, método, economía, fuentes. */
+:root {
+  --font-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --bg: #0b1218; --barra: #060b10; --barra-ink: #eef2f5; --barra-ink-2: #9aabba;
+  --panel: #121b24; --panel-2: #17222d; --ink: #e8eef3; --ink-2: #aab7c3; --ink-3: #8493a0;
+  --line: #233140; --line-2: #34485a;
+  --accent: #ff8a3d; --accent-ink: #1a0e05;
+  --warn: #f5b22e;
+  --c-agro: #d27de0; --c-past: #b9d64e; --c-bosque: #2f9e57; --c-mat: #c9a227; --c-otros: #7f8d9a;
+  --nat: #3aa0a6; --uso: #d27de0;
+  --s-baja: #f2c14e; --s-mbaja: #ee8f3a; --s-malta: #e0452f; --s-alta: #a3195b; --regrow: #3aa0a6; --calm: #5f7080;
+  --radius: 6px;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f1f4f6; --panel: #ffffff; --panel-2: #eef1f4; --ink: #0f1b26; --ink-2: #3b4956; --ink-3: #5f6e7b;
+    --line: #d7dde3; --line-2: #bcc6cf;
+    --accent: #b8420a; --accent-ink: #ffffff; --accent-soft: #fbe9dc;
+    --ok: #1d7f63; --warn: #8a5600; --crit: #c62a1c;
+    --c-bosque: #1f7a40; --c-mat: #a8820c; --c-past: #7f9a1a; --c-cultivo: #a844bd; --c-otros: #6c7a86;
+    --s-baja: #d9a21a; --s-mbaja: #d97a1f; --s-malta: #c8381f; --s-alta: #8a1450;
+    --regrow: #1d7f87; --calm: #8493a0;
+    --map-bg: #dfe6ec; --hatch-a: #6c7d8d; --hatch-b: #a9b6c2;
+    --scl-veg: #3d7a3a; --scl-noveg: #a68a56; --scl-agua: #2a63b5; --scl-nube: #f7f9fb; --scl-cirro: #b4cde6; --scl-sombra: #5b3f7a; --scl-otro: #6c7a86;
+    --sombra: 0 1px 2px rgb(15 27 38 / 0.08), 0 6px 18px rgb(15 27 38 / 0.10);
+    --c-agro: #a844bd; --nat: #1d7f87; --uso: #a844bd; --c-past: #7f9a1a; --c-mat: #a8820c;
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+    --bg: #f1f4f6; --panel: #ffffff; --panel-2: #eef1f4; --ink: #0f1b26; --ink-2: #3b4956; --ink-3: #5f6e7b;
+    --line: #d7dde3; --line-2: #bcc6cf;
+    --accent: #b8420a; --accent-ink: #ffffff; --accent-soft: #fbe9dc;
+    --ok: #1d7f63; --warn: #8a5600; --crit: #c62a1c;
+    --c-bosque: #1f7a40; --c-mat: #a8820c; --c-past: #7f9a1a; --c-cultivo: #a844bd; --c-otros: #6c7a86;
+    --s-baja: #d9a21a; --s-mbaja: #d97a1f; --s-malta: #c8381f; --s-alta: #8a1450;
+    --regrow: #1d7f87; --calm: #8493a0;
+    --map-bg: #dfe6ec; --hatch-a: #6c7d8d; --hatch-b: #a9b6c2;
+    --scl-veg: #3d7a3a; --scl-noveg: #a68a56; --scl-agua: #2a63b5; --scl-nube: #f7f9fb; --scl-cirro: #b4cde6; --scl-sombra: #5b3f7a; --scl-otro: #6c7a86;
+    --sombra: 0 1px 2px rgb(15 27 38 / 0.08), 0 6px 18px rgb(15 27 38 / 0.10);
+    --c-agro: #a844bd; --nat: #1d7f87; --uso: #a844bd; --c-past: #7f9a1a; --c-mat: #a8820c;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 1rem; line-height: 1.55; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--barra); }
+h1, h2, h3, h4 { font-family: var(--font-display); margin: 0; text-wrap: balance; }
+h2 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); font-weight: 780; font-stretch: 86%; line-height: 1.12; letter-spacing: -0.008em; }
+h3 { font-size: 1.125rem; font-weight: 700; font-stretch: 90%; line-height: 1.25; }
+p { margin: 0; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.eyebrow { font-family: var(--font-display); font-stretch: 85%; font-weight: 650; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); }
+.num { font-variant-numeric: tabular-nums; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); min-width: 0; }
+
+.barra { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--barra); color: var(--barra-ink); }
+.barra-in { max-width: 1240px; margin: 0 auto; min-height: 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; align-items: center; gap: 0 22px; flex-wrap: wrap; }
+.marca { font-family: var(--font-display); font-weight: 760; font-stretch: 88%; font-size: 1rem; color: inherit; text-decoration: none; display: inline-flex; gap: 9px; align-items: center; white-space: nowrap; padding-block: 12px; }
+.marca::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent); }
+.barra nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; min-width: 0; flex: 1 1 auto; }
+.barra nav::-webkit-scrollbar { display: none; }
+.barra nav a { color: var(--barra-ink-2); text-decoration: none; font-size: 0.8125rem; font-weight: 600; white-space: nowrap; padding: 13px 10px 11px; border-bottom: 2px solid transparent; }
+.barra nav a:hover { color: var(--barra-ink); }
+.barra nav a[aria-current="location"] { color: var(--barra-ink); border-bottom-color: var(--accent); }
+.barra nav a:focus-visible { outline-color: var(--barra-ink); outline-offset: -4px; }
+.corte-mini { font-size: 0.8125rem; color: var(--barra-ink-2); white-space: nowrap; }
+@media (max-width: 1000px) { .barra nav { order: 3; flex-basis: 100%; margin-inline: -10px; } .corte-mini { margin-left: auto; } }
+@media (max-width: 720px) { .barra { position: relative; top: 0; } }
+
+.envoltura { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 56px; display: grid; gap: 64px; }
+.envoltura > section { scroll-margin-top: 64px; display: grid; gap: 18px; min-width: 0; }
+.sec-cabeza { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 6px 40px; align-items: end; }
+.sec-cabeza > div { display: grid; gap: 4px; }
+.sec-cabeza p { color: var(--ink-2); max-width: 70ch; }
+@media (max-width: 900px) { .sec-cabeza { grid-template-columns: minmax(0, 1fr); } }
+
+.hero { padding-top: 44px; gap: 22px !important; }
+.hero-texto { display: grid; gap: 14px; max-width: 1040px; }
+.hero h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); font-weight: 850; font-stretch: 82%; line-height: 1.0; letter-spacing: -0.016em; max-width: 20ch; }
+.hero h1 mark { background: none; color: inherit; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 0.08em; text-underline-offset: 0.12em; text-decoration-skip-ink: none; }
+.bajada { font-size: clamp(1.05rem, 1.5vw, 1.25rem); color: var(--ink-2); max-width: 68ch; line-height: 1.55; }
+.bajada strong { color: var(--ink); font-weight: 650; }
+
+.cifras { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.cifra { background: var(--panel); padding: 18px 18px 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.cifra .valor { font-family: var(--font-display); font-stretch: 80%; font-weight: 780; font-size: 2.5rem; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.cifra .valor small { font-size: 1rem; font-weight: 600; color: var(--ink-3); margin-left: 4px; }
+.cifra .nota { color: var(--ink-2); font-size: 0.8125rem; line-height: 1.4; }
+.cifra.k-agro .valor { color: var(--c-agro); }
+.cifra.k-bosque .valor { color: var(--c-bosque); }
+.cifra.k-acc .valor { color: var(--accent); }
+@media (max-width: 1180px) { .cifras { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .cifras { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cifra { padding: 14px 14px 13px; } .cifra .valor { font-size: 2rem; } }
+
+.boton { font: inherit; font-size: 0.8125rem; font-weight: 600; color: var(--ink-2); background: var(--panel); border: 1px solid var(--line-2); border-radius: 999px; padding: 5px 14px; min-height: 32px; cursor: pointer; }
+.boton:hover { border-color: var(--accent); color: var(--ink); }
+.segmentos { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 2px; background: var(--panel-2); flex-wrap: wrap; }
+.segmentos button { font: inherit; font-size: 0.8125rem; font-weight: 600; color: var(--ink-2); background: transparent; border: 0; border-radius: 999px; padding: 5px 12px; cursor: pointer; min-height: 30px; }
+.segmentos button:hover { color: var(--ink); }
+.segmentos button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.controles { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.campo { display: grid; gap: 6px; }
+.campo label { font-size: 0.8125rem; font-weight: 600; color: var(--ink-2); display: flex; justify-content: space-between; gap: 10px; }
+.campo output { font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 650; }
+input[type="range"] { width: 100%; accent-color: var(--accent); margin: 0; }
+input[type="number"], input[type="text"] { font: inherit; font-size: 0.875rem; color: var(--ink); background: var(--panel-2); border: 1px solid var(--line-2); border-radius: 4px; padding: 6px 8px; width: 100%; min-width: 0; }
+
+.bloque { padding: 18px; display: grid; gap: 14px; }
+.barras { display: grid; gap: 12px; }
+.b-fila { display: grid; grid-template-columns: minmax(0, 210px) minmax(0, 1fr) 118px; gap: 14px; align-items: center; }
+.b-nom { font-weight: 650; line-height: 1.25; }
+.b-nom small { display: block; font-weight: 400; color: var(--ink-3); font-size: 0.78rem; }
+.b-pista { height: 28px; background: var(--panel-2); border-radius: 3px; overflow: hidden; }
+.b-pista span { display: block; height: 100%; border-radius: 0 3px 3px 0; transition: width 0.3s ease; }
+.b-val { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
+@media (max-width: 640px) { .b-fila { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; } .b-pista { grid-column: 1 / -1; order: 3; } }
+.tira { display: flex; height: 30px; border-radius: 3px; overflow: hidden; }
+.tira span { display: grid; place-items: center; font-size: 0.8125rem; font-weight: 700; color: #0b1218; min-width: 0; white-space: nowrap; }
+.pie-graf { font-size: 0.8125rem; color: var(--ink-3); max-width: 90ch; }
+
+.biomas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 1000px) { .biomas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .biomas { grid-template-columns: minmax(0, 1fr); } }
+.bioma { padding: 16px; display: grid; gap: 10px; align-content: start; }
+.bioma .p { font-family: var(--font-display); font-stretch: 80%; font-weight: 780; font-size: 2.4rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.bioma .p small { font-size: 1rem; color: var(--ink-3); font-weight: 600; margin-left: 3px; }
+.bioma .ha { color: var(--ink-2); font-size: 0.875rem; }
+.bioma .dos { font-size: 0.8125rem; color: var(--ink-2); display: grid; gap: 4px; }
+.leyenda { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.8125rem; color: var(--ink-2); }
+.leyenda i { width: 11px; height: 11px; border-radius: 2px; display: inline-block; margin-right: 7px; vertical-align: -1px; }
+
+.cols { display: flex; align-items: stretch; gap: 14px; height: 280px; }
+.col { flex: 1; min-width: 0; display: flex; flex-direction: column; text-align: center; gap: 6px; }
+.col .v { font-weight: 700; font-variant-numeric: tabular-nums; }
+.col .area { flex: 1; display: flex; align-items: flex-end; }
+.col .rect { width: 100%; height: calc(var(--h) * 1%); border-radius: 4px 4px 0 0; background: var(--calm); }
+.col.pico .rect { background: var(--accent); }
+.col .m { font-weight: 600; color: var(--ink-2); }
+
+.pasos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 900px) { .pasos { grid-template-columns: minmax(0, 1fr); } }
+.paso { padding: 16px; display: grid; gap: 8px; align-content: start; }
+.paso .n { font-family: var(--font-display); font-stretch: 80%; font-weight: 780; font-size: 1.6rem; color: var(--accent); line-height: 1; }
+.paso p { color: var(--ink-2); font-size: 0.9375rem; }
+.paso b { color: var(--ink); font-weight: 650; }
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 900px) { .calc { grid-template-columns: minmax(0, 1fr); } }
+.par { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 520px) { .par { grid-template-columns: minmax(0, 1fr); } }
+.lecturas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.lectura-n .v { font-family: var(--font-display); font-stretch: 80%; font-weight: 780; font-size: 1.9rem; line-height: 1.05; font-variant-numeric: tabular-nums; display: block; }
+.lectura-n .e { font-size: 0.78rem; color: var(--ink-3); }
+.clase-chip { display: inline-flex; gap: 8px; align-items: center; font-weight: 650; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--panel-2); width: fit-content; }
+.clase-chip i { width: 10px; height: 10px; border-radius: 50%; }
+.formula { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.8125rem; color: var(--ink-2); background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px; overflow-x: auto; white-space: nowrap; }
+.recta-wrap { overflow-x: auto; padding: 4px 16px 14px; }
+.recta { min-width: 560px; display: block; width: 100%; height: auto; }
+
+.tabla-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.875rem; min-width: 620px; }
+th, td { padding: 8px 8px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th:first-child, td:first-child, th:nth-child(3), td:nth-child(3) { text-align: left; }
+th { font-family: var(--font-display); font-stretch: 85%; font-weight: 650; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); }
+td { font-variant-numeric: tabular-nums; }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 8px; vertical-align: -1px; }
+.eco-pie { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: end; justify-content: space-between; }
+.eco-total { font-family: var(--font-display); font-stretch: 80%; font-weight: 780; font-size: 2.2rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.falta { color: var(--warn); font-size: 0.8125rem; min-height: 1.2em; }
+
+.fuentes ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.fuentes li { font-size: 0.9375rem; color: var(--ink-2); }
+.fuentes li b { color: var(--ink); font-weight: 650; }
+.notas { margin: 0; padding-left: 1.1rem; display: grid; gap: 6px; color: var(--ink-2); font-size: 0.9375rem; }
+.pie { font-size: 0.8125rem; color: var(--ink-3); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .b-pista span { transition: none; } }
+</style></head><body>
+
+<header class="barra">
+  <div class="barra-in">
+    <a class="marca" href="#resumen">¿Qué se quemó en el Perú?</a>
+    <nav aria-label="Secciones">
+      <a href="#resumen">Resumen</a>
+      <a href="#cobertura">Cobertura</a>
+      <a href="#regiones">Regiones</a>
+      <a href="#departamentos">Departamentos</a>
+      <a href="#temporada">Temporada</a>
+      <a href="#metodo">Método</a>
+      <a href="#economia">Economía</a>
+      <a href="#fuentes">Fuentes</a>
+    </nav>
+    <span class="corte-mini">Perú · 2013–2024</span>
+  </div>
+</header>
+
+<main class="envoltura">
+
+<section id="resumen" class="hero">
+  <div class="hero-texto">
+    <span class="eyebrow">Incendios y cobertura del suelo · Todo el Perú</span>
+    <h1>¿Qué se quemó? <mark>Pastizal, pasto y chacras</mark></h1>
+    <p class="bajada">Entre 2013 y 2024 se quemaron por primera vez <strong>2,3 millones de hectáreas</strong> en el país. Al ver qué cobertura tenían, <strong>tres de cada cuatro</strong> eran pastizal, pasto o terreno agropecuario. El <strong>bosque</strong>, incluido el bosque seco, fue el <strong>9 %</strong>.</p>
+  </div>
+  <div class="cifras">
+    <div class="cifra"><span class="eyebrow">Área quemada</span><span class="valor">2,3<small>millones ha</small></span><span class="nota">Quemada por primera vez entre 2013 y 2024.</span></div>
+    <div class="cifra k-agro"><span class="eyebrow">Pastizal y agropecuario</span><span class="valor">76<small>%</small></span><span class="nota">Pastizal, pasto, agricultura y mosaico agropecuario.</span></div>
+    <div class="cifra k-bosque"><span class="eyebrow">Bosque</span><span class="valor">9<small>%</small></span><span class="nota">Bosque (6,1 %) y bosque seco (3,0 %).</span></div>
+    <div class="cifra k-acc"><span class="eyebrow">Agosto a noviembre</span><span class="valor">79<small>%</small></span><span class="nota">Del área quemada ocurre en esos cuatro meses.</span></div>
+    <div class="cifra"><span class="eyebrow">Peor año</span><span class="valor">314<small>mil ha</small></span><span class="nota">2022, el año con más área nueva quemada.</span></div>
+    <div class="cifra"><span class="eyebrow">Peor mes</span><span class="valor">151<small>mil ha</small></span><span class="nota">Octubre de 2024, el mes con más área quemada.</span></div>
+  </div>
+</section>
+
+<section id="cobertura">
+  <div class="sec-cabeza">
+    <div><span class="eyebrow">Cruce con la cobertura</span><h2>¿Qué cobertura tenía lo que se quemó?</h2></div>
+    <p>Cada hectárea quemada se cruza con el mapa de cobertura del suelo. Esto separa el bosque del pastizal y del terreno agropecuario, que tienen valores económicos muy distintos.</p>
+  </div>
+  <div class="panel bloque">
+    <div class="controles">
+      <div class="segmentos" id="modo-g" role="group" aria-label="Nivel de detalle"><button type="button" data-v="g" aria-pressed="true">5 grupos</button><button type="button" data-v="c" aria-pressed="false">11 clases</button></div>
+      <div class="segmentos" id="modo-u" role="group" aria-label="Unidad"><button type="button" data-v="p" aria-pressed="true">Porcentaje</button><button type="button" data-v="h" aria-pressed="false">Hectáreas aproximadas</button></div>
+    </div>
+    <div class="barras" id="barras-cob"></div>
+    <div class="pie-graf" id="pie-cob"></div>
+  </div>
+  <div class="panel bloque">
+    <h3>Natural o de uso</h3>
+    <div class="tira" role="img" aria-label="54 % se quemó en áreas naturales y 46 % en áreas de uso"><span style="width:54%;background:var(--nat)">54 % natural</span><span style="width:46%;background:var(--uso)">46 % de uso</span></div>
+    <p class="pie-graf">Área natural incluye bosque, pastizal natural y matorral. Área de uso incluye agricultura, pasto y mosaico agropecuario.</p>
+  </div>
+</section>
+
+<section id="regiones">
+  <div class="sec-cabeza">
+    <div><span class="eyebrow">Regiones naturales</span><h2>Amazonía y Andes concentran el 97 %</h2></div>
+    <p>La Amazonía y los Andes suman casi todo el fuego. Lo que se quema en cada una es distinto: en los Andes domina la cobertura natural, en la Amazonía el terreno de uso.</p>
+  </div>
+  <div class="biomas" id="biomas"></div>
+  <div class="leyenda"><span><i style="background:var(--nat)"></i>Cobertura natural</span><span><i style="background:var(--uso)"></i>Áreas de uso</span></div>
+</section>
+
+<section id="departamentos">
+  <div class="sec-cabeza">
+    <div><span class="eyebrow">Dónde se quemó</span><h2>Diez departamentos, casi la mitad en cuatro</h2></div>
+    <p>Ucayali, Puno, Huánuco y Cusco suman cerca del 49 % del área quemada entre 2013 y 2024. Los 24 departamentos tienen fuego, pero con intensidades muy distintas.</p>
+  </div>
+  <div class="panel bloque"><div class="barras" id="barras-dep"></div><p class="pie-graf">Miles de hectáreas quemadas por primera vez, acumuladas 2013–2024. El 49 % es un cálculo propio sobre 2,3 millones de hectáreas.</p></div>
+</section>
+
+<section id="temporada">
+  <div class="sec-cabeza">
+    <div><span class="eyebrow">Cuándo se quemó</span><h2>Casi ocho de cada diez hectáreas, de agosto a noviembre</h2></div>
+    <p>El fuego sigue la temporada seca. En octubre de 2024 se registró el mes con más área quemada de toda la serie: 151 mil hectáreas.</p>
+  </div>
+  <div class="panel bloque"><div class="cols" id="cols" role="img" aria-label="Porcentaje del área quemada por mes, de julio a noviembre"></div><p class="pie-graf">Porcentaje del área quemada 2013–2024 por mes. Agosto a noviembre suman 79 %.</p></div>
+</section>
+
+<section id="metodo">
+  <div class="sec-cabeza">
+    <div><span class="eyebrow">Cómo se mide</span><h2>De un foco de calor a las hectáreas por cobertura</h2></div>
+    <p>Las cifras nacionales de arriba salen de un mapeo de área quemada con Landsat a 30 m. Para medir un incendio concreto se sigue este camino con imágenes Sentinel-2 y el mapa ESA WorldCover.</p>
+  </div>
+  <div class="pasos">
+    <div class="panel paso"><span class="n">1</span><h3>Ubicar el incendio</h3><p>Se bajan los focos <b>VIIRS de NASA FIRMS</b> de los últimos 7 días. Marcan dónde y cuándo empezó el fuego, no cuánto se quemó.</p></div>
+    <div class="panel paso"><span class="n">2</span><h3>Elegir antes y después</h3><p>Se leen imágenes <b>Sentinel-2 L2A</b> de <b>Planetary Computer</b> solo en esa zona, una antes y otra después, con poca nube sobre el incendio.</p></div>
+    <div class="panel paso"><span class="n">3</span><h3>Medir lo quemado</h3><p>Se calcula <b>NBR</b> y <b>dNBR</b> y se enmascaran nubes y sombras con la capa <b>SCL</b>. Los umbrales de Key y Benson dan la severidad.</p></div>
+    <div class="panel paso"><span class="n">4</span><h3>Cruzar con WorldCover</h3><p>El área quemada se cruza con <b>ESA WorldCover</b> (10 m): 10 árboles, 20 matorral, 30 pastizal, 40 cultivo. Se usa una sola versión del mapa.</p></div>
+    <div class="panel paso"><span class="n">5</span><h3>Contar hectáreas</h3><p>Cada píxel de 10 m son 0,01 ha. Se suma por cobertura, por severidad y por distrito, y se reporta aparte el área sin dato por nubes.</p></div>
+    <div class="panel paso"><span class="n">6</span><h3>Valorar</h3><p>Hectáreas por cobertura × valor por hectárea × porcentaje de pérdida. Cada valor debe citar su fuente.</p></div>
+  </div>
+  <div class="calc">
+    <div class="panel bloque">
+      <h3>Probar el cálculo en un píxel</h3>
+      <div class="par">
+        <div class="campo"><label for="b8pre">B8A antes <output id="b8pre-v" for="b8pre"></output></label><input type="range" id="b8pre" min="0" max="0.6" step="0.01" value="0.35"></div>
+        <div class="campo"><label for="b12pre">B12 antes <output id="b12pre-v" for="b12pre"></output></label><input type="range" id="b12pre" min="0" max="0.5" step="0.01" value="0.12"></div>
+        <div class="campo"><label for="b8post">B8A después <output id="b8post-v" for="b8post"></output></label><input type="range" id="b8post" min="0" max="0.6" step="0.01" value="0.18"></div>
+        <div class="campo"><label for="b12post">B12 después <output id="b12post-v" for="b12post"></output></label><input type="range" id="b12post" min="0" max="0.5" step="0.01" value="0.25"></div>
+      </div>
+      <div class="formula">NBR = (B8A − B12) / (B8A + B12)<br>dNBR = NBR antes − NBR después</div>
+    </div>
+    <div class="panel bloque">
+      <div class="lecturas">
+        <div class="lectura-n"><span class="v num" id="o-nbr-pre">–</span><span class="e">NBR antes</span></div>
+        <div class="lectura-n"><span class="v num" id="o-nbr-post">–</span><span class="e">NBR después</span></div>
+        <div class="lectura-n"><span class="v num" id="o-dnbr">–</span><span class="e">dNBR</span></div>
+      </div>
+      <span class="clase-chip" id="o-clase"><i></i><span></span></span>
+      <p id="o-texto" style="color:var(--ink-2)"></p>
+    </div>
+  </div>
+  <div class="panel recta-wrap"><svg class="recta" id="recta" viewBox="0 0 640 96" role="img" aria-label="Recta de dNBR con las clases de severidad y el valor calculado"></svg></div>
+</section>
+
+<section id="economia">
+  <div class="sec-cabeza">
+    <div><span class="eyebrow">Para economía</span><h2>Del área quemada al valor afectado</h2></div>
+    <p>Las hectáreas de cada grupo salen del porcentaje de cobertura por 2,3 millones de hectáreas. Escribe un valor por hectárea con su fuente y la página calcula el valor afectado.</p>
+  </div>
+  <div class="panel bloque">
+    <div class="controles">
+      <div class="segmentos" id="eco-per" role="group" aria-label="Periodo"><button type="button" data-v="t" aria-pressed="true">Total 2013–2024</button><button type="button" data-v="a" aria-pressed="false">Promedio por año</button></div>
+    </div>
+    <div class="tabla-wrap"><table id="eco-tabla"></table></div>
+    <div class="eco-pie">
+      <div class="campo" style="max-width:240px"><label for="eco-pct">Porcentaje de pérdida asumido <output id="eco-pct-v" for="eco-pct"></output></label><input type="range" id="eco-pct" min="0" max="100" step="5" value="100"></div>
+      <div style="display:grid;gap:4px;text-align:right"><span class="eyebrow">Valor afectado estimado</span><span class="eco-total" id="eco-total">–</span></div>
+    </div>
+    <p class="falta" id="eco-falta" role="status"></p>
+    <p class="pie-graf">El cálculo deja fuera servicios ambientales, costo de restauración y daños a terceros. Los valores por hectárea los pones tú: no hay un valor único válido para todo el país.</p>
+  </div>
+</section>
+
+<section id="fuentes">
+  <div class="sec-cabeza">
+    <div><span class="eyebrow">Referencias</span><h2>Fuentes y notas</h2></div>
+    <p>Revisadas el 21 de octubre de 2026. La serie publicada llega hasta 2024.</p>
+  </div>
+  <div class="panel bloque fuentes">
+    <ul>
+      <li><b>Área quemada y cobertura.</b> MapBiomas Perú, MapBiomas Fuego Perú, Colección 1 (2013–2024), Landsat 7, 8 y 9 a 30 m. <a href="https://peru.mapbiomas.org/wp-content/uploads/sites/14/2025/10/FACTSHEET-FUEGO.pdf" target="_blank" rel="noopener">Hoja de datos</a>, <a href="https://peru.mapbiomas.org/wp-content/uploads/sites/14/2025/10/Onesheet-fuego.pdf" target="_blank" rel="noopener">resumen</a> e <a href="https://peru.mapbiomas.org/wp-content/uploads/sites/6/2026/08/Copia-de-MBI-infografia-peru-fuego-2025-ES-PRINT.pdf" target="_blank" rel="noopener">infografía</a>.</li>
+      <li><b>Cobertura periodística.</b> <a href="https://es.mongabay.com/2025/12/incendios-forestales-millones-hectareas-quemadas-peru/" target="_blank" rel="noopener">Mongabay Latam, diciembre de 2025</a>, y <a href="https://rpp.pe/peru/actualidad/en-el-peru-la-superficie-quemada-en-12-anos-es-diez-veces-mayor-que-la-extension-de-lima-metropolitana-noticia-1661625" target="_blank" rel="noopener">RPP</a>.</li>
+      <li><b>Severidad dNBR.</b> Key, C. H. y Benson, N. C. (2006), FIREMON, USDA Forest Service, RMRS-GTR-164-CD. También en <a href="https://forest-fire.emergency.copernicus.eu/about-effis/technical-background/fire-severity" target="_blank" rel="noopener">Copernicus EFFIS</a>.</li>
+      <li><b>Cobertura de 10 m.</b> ESA WorldCover (2020 v100 y 2021 v200). Zanaga, D. et al. (2022), <a href="https://doi.org/10.5281/zenodo.7254221" target="_blank" rel="noopener">Zenodo</a>. Clases en <a href="https://collections.sentinel-hub.com/worldcover/readme.html" target="_blank" rel="noopener">Sentinel Hub</a>.</li>
+      <li><b>Nubes y focos.</b> <a href="https://custom-scripts.sentinel-hub.com/sentinel-2/scene-classification" target="_blank" rel="noopener">Capa SCL de Sentinel-2 L2A</a>, <a href="https://firms.modaps.eosdis.nasa.gov/" target="_blank" rel="noopener">NASA FIRMS</a> y <a href="https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a" target="_blank" rel="noopener">Planetary Computer</a>.</li>
+    </ul>
+    <h3>Notas sobre los datos</h3>
+    <ol class="notas">
+      <li>El total de 2,3 millones de hectáreas es área quemada por primera vez, contada una sola vez en 12 años. Una infografía del mismo proyecto muestra 1,6 millones como área neta. Se usa 2,3 millones porque lo repiten Mongabay, la hoja de datos y el resumen.</li>
+      <li>Los porcentajes por cobertura vienen de la infografía, que no indica su base. Cuadran exactamente con el 54 % natural y 46 % de uso que publica la misma infografía (clases naturales: 54,0 %; clases de uso: 46,0 %) y con la suma de las cuatro regiones naturales.</li>
+      <li>Los meses se asignan según el orden de la infografía. El 79 % entre agosto y noviembre sí está dicho de forma explícita.</li>
+      <li>Las hectáreas por cobertura son aproximadas: porcentaje multiplicado por 2,3 millones.</li>
+      <li>Pastizal, pasto y agropecuario se agrupan así: agropecuario es mosaico agropecuario, pasto y agricultura; bosque es bosque y bosque seco.</li>
+    </ol>
+  </div>
+  <p class="pie">Esta página usa datos de MapBiomas Perú, publicados con licencia abierta CC-BY. Navega con la barra superior o con las flechas ← → del teclado.</p>
+</section>
+
+</main>
+
+<script>
+(function () {
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var fmt = function (v, d) { d = d == null ? 1 : d; return v.toLocaleString('es', { minimumFractionDigits: d, maximumFractionDigits: d }); };
+
+  /* ---------- datos (MapBiomas Fuego Perú, Colección 1, 2013-2024) ---------- */
+  var TOTAL = 2300000; // hectáreas quemadas por primera vez, 2013-2024
+  var GRUPOS = [
+    { n: 'Agropecuario', d: 'Mosaico agropecuario, pasto y agricultura', p: 44.5, c: '--c-agro', partes: [['Mosaico agropecuario', 38.3], ['Pasto', 4.2], ['Agricultura', 2.0]] },
+    { n: 'Pastizal y herbazal', d: 'Pastizal natural', p: 31.7, c: '--c-past', partes: [['Pastizal / herbazal', 31.7]] },
+    { n: 'Bosque', d: 'Bosque y bosque seco', p: 9.1, c: '--c-bosque', partes: [['Bosque', 6.1], ['Bosque seco', 3.0]] },
+    { n: 'Matorral', d: '', p: 3.3, c: '--c-mat', partes: [['Matorral', 3.3]] },
+    { n: 'Otras coberturas', d: 'Formación no boscosa, zona pantanosa, sin vegetación y otros', p: 11.4, c: '--c-otros', partes: [['Otra formación no boscosa', 6.3], ['Zona pantanosa', 2.6], ['Otros', 1.5], ['Área sin vegetación', 1.0]] }
+  ];
+  var DEPS = [['Ucayali', 350.6], ['Puno', 295.1], ['Huánuco', 252.0], ['Cusco', 230.0], ['Madre de Dios', 154.7], ['Junín', 143.9], ['Cajamarca', 132.2], ['Áncash', 88.6], ['San Martín', 86.3], ['La Libertad', 76.1]];
+  var MESES = [['Jul', 6.0], ['Ago', 16.1], ['Sep', 27.3], ['Oct', 22.2], ['Nov', 13.6]];
+  var BIOMAS = [
+    { n: 'Amazonía', p: 53, ha: '1,2 millones de ha', nat: 28.3, uso: 71.7 },
+    { n: 'Andes', p: 44, ha: '1,0 millones de ha', nat: 86.5, uso: 13.5 },
+    { n: 'Bosque seco ecuatorial', p: 2, ha: '42,3 mil ha', nat: 47.2, uso: 52.8 },
+    { n: 'Desierto costero', p: 1, ha: '26,9 mil ha', nat: 2.1, uso: 97.9 }
+  ];
+
+  /* ---------- cobertura ---------- */
+  var cob = { nivel: 'g', unidad: 'p' };
+  function filaBarra(nombre, sub, valorTxt, pct, maxPct, colorVar) {
+    return '<div class="b-fila"><div class="b-nom">' + nombre + (sub ? '<small>' + sub + '</small>' : '') + '</div>' +
+      '<div class="b-pista"><span style="width:' + (pct / maxPct * 100) + '%;background:var(' + colorVar + ')"></span></div>' +
+      '<div class="b-val">' + valorTxt + '</div></div>';
+  }
+  function renderCob() {
+    var filas = [];
+    if (cob.nivel === 'g') {
+      GRUPOS.forEach(function (g) { filas.push([g.n, g.d, g.p, g.c]); });
+    } else {
+      GRUPOS.forEach(function (g) { g.partes.forEach(function (x) { filas.push([x[0], '', x[1], g.c]); }); });
+      filas.sort(function (a, b) { return b[2] - a[2]; });
+    }
+    var max = Math.max.apply(null, filas.map(function (f) { return f[2]; }));
+    $('#barras-cob').innerHTML = filas.map(function (f) {
+      var txt = cob.unidad === 'p' ? fmt(f[2]) + ' %' : '≈ ' + fmt(Math.round(f[2] / 100 * TOTAL / 1000), 0) + ' mil ha';
+      return filaBarra(f[0], f[1], txt, f[2], max, f[3]);
+    }).join('');
+    $('#pie-cob').textContent = cob.unidad === 'p'
+      ? 'Porcentaje del área quemada 2013–2024. Los 11 niveles suman 100 %.'
+      : 'Hectáreas aproximadas: porcentaje multiplicado por 2,3 millones de hectáreas, redondeado a miles.';
+  }
+  function bindSeg(id, fn) {
+    $$('#' + id + ' button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        $$('#' + id + ' button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        fn(b.getAttribute('data-v'));
+      });
+    });
+  }
+  bindSeg('modo-g', function (v) { cob.nivel = v; renderCob(); });
+  bindSeg('modo-u', function (v) { cob.unidad = v; renderCob(); });
+
+  /* ---------- regiones, departamentos, temporada ---------- */
+  $('#biomas').innerHTML = BIOMAS.map(function (b) {
+    return '<div class="panel bioma"><h3>' + b.n + '</h3><span class="p">' + fmt(b.p, 0) + '<small>%</small></span><span class="ha">' + b.ha + ' quemadas</span>' +
+      '<div class="tira" role="img" aria-label="' + fmt(b.nat) + ' % cobertura natural y ' + fmt(b.uso) + ' % áreas de uso"><span style="width:' + b.nat + '%;background:var(--nat)"></span><span style="width:' + b.uso + '%;background:var(--uso)"></span></div>' +
+      '<div class="dos"><span>' + fmt(b.nat) + ' % en cobertura natural</span><span>' + fmt(b.uso) + ' % en áreas de uso</span></div></div>';
+  }).join('');
+
+  var maxDep = DEPS[0][1];
+  $('#barras-dep').innerHTML = DEPS.map(function (d, i) {
+    return '<div class="b-fila"><div class="b-nom">' + (i + 1) + '. ' + d[0] + '</div><div class="b-pista"><span style="width:' + (d[1] / maxDep * 100) + '%;background:var(--accent)"></span></div><div class="b-val">' + fmt(Math.round(d[1]), 0) + ' mil ha</div></div>';
+  }).join('');
+
+  var maxMes = 30;
+  $('#cols').innerHTML = MESES.map(function (m) {
+    var pico = m[0] !== 'Jul';
+    return '<div class="col' + (pico ? ' pico' : '') + '"><span class="v">' + fmt(m[1]) + ' %</span><div class="area"><div class="rect" style="--h:' + (m[1] / maxMes * 100) + '"></div></div><span class="m">' + m[0] + '</span></div>';
+  }).join('');
+
+  /* ---------- calculadora de un píxel ---------- */
+  var CLS = [
+    [-0.25, 'Rebrote alto', '--regrow'], [-0.10, 'Rebrote bajo', '--regrow'], [0.10, 'Sin quemar', '--calm'],
+    [0.27, 'Severidad baja', '--s-baja'], [0.44, 'Severidad moderada-baja', '--s-mbaja'], [0.66, 'Severidad moderada-alta', '--s-malta'], [9, 'Severidad alta', '--s-alta']
+  ];
+  function claseDe(d) { for (var i = 0; i < CLS.length; i++) if (d < CLS[i][0]) return CLS[i]; return CLS[CLS.length - 1]; }
+  function drawRecta(dn) {
+    var lo = -0.5, hi = 1.3, x0 = 20, x1 = 620;
+    var X = function (v) { return x0 + (Math.max(lo, Math.min(hi, v)) - lo) / (hi - lo) * (x1 - x0); };
+    var segs = [[-0.5, -0.25, '--regrow'], [-0.25, -0.10, '--regrow'], [-0.10, 0.10, '--calm'], [0.10, 0.27, '--s-baja'], [0.27, 0.44, '--s-mbaja'], [0.44, 0.66, '--s-malta'], [0.66, 1.3, '--s-alta']];
+    var out = '';
+    segs.forEach(function (s, k) {
+      out += '<rect x="' + X(s[0]) + '" y="40" width="' + (X(s[1]) - X(s[0])) + '" height="16" style="fill:var(' + s[2] + ');opacity:' + (k === 0 ? 0.55 : 1) + '"></rect>';
+    });
+    [-0.25, -0.10, 0.10, 0.27, 0.44, 0.66].forEach(function (t) {
+      out += '<line x1="' + X(t) + '" x2="' + X(t) + '" y1="40" y2="62" style="stroke:var(--ink-3);stroke-width:1"></line>' +
+        '<text x="' + X(t) + '" y="77" text-anchor="middle" style="fill:var(--ink-3);font:11px var(--font-body)">' + fmt(t, 2) + '</text>';
+    });
+    out += '<text x="' + X(0) + '" y="92" text-anchor="middle" style="fill:var(--ink-3);font:11px var(--font-body)">sin quemar</text>';
+    out += '<text x="' + X(0.85) + '" y="92" text-anchor="middle" style="fill:var(--ink-3);font:11px var(--font-body)">más severo</text>';
+    if (isFinite(dn)) {
+      var mx = X(dn);
+      out += '<line x1="' + mx + '" x2="' + mx + '" y1="22" y2="58" style="stroke:var(--ink);stroke-width:2"></line>' +
+        '<path d="M' + (mx - 6) + ',14 L' + (mx + 6) + ',14 L' + mx + ',24 Z" style="fill:var(--ink)"></path>' +
+        '<text x="' + Math.max(40, Math.min(600, mx)) + '" y="10" text-anchor="middle" style="fill:var(--ink);font:600 12px var(--font-body)">dNBR ' + fmt(dn, 2) + '</text>';
+    }
+    $('#recta').innerHTML = out;
+  }
+  function calc() {
+    var v = function (id) { var x = parseFloat($('#' + id).value); $('#' + id + '-v').textContent = fmt(x, 2); return x; };
+    var a = v('b8pre'), b = v('b12pre'), c = v('b8post'), d = v('b12post');
+    var nbr = function (n, s) { return (n + s) === 0 ? NaN : (n - s) / (n + s); };
+    var pre = nbr(a, b), post = nbr(c, d), dn = pre - post;
+    $('#o-nbr-pre').textContent = isFinite(pre) ? fmt(pre, 2) : '–';
+    $('#o-nbr-post').textContent = isFinite(post) ? fmt(post, 2) : '–';
+    $('#o-dnbr').textContent = isFinite(dn) ? fmt(dn, 2) : '–';
+    var chip = $('#o-clase');
+    if (isFinite(dn)) {
+      var k = claseDe(dn);
+      chip.querySelector('i').style.background = 'var(' + k[2] + ')';
+      chip.querySelector('span').textContent = k[1];
+      $('#o-texto').textContent = dn >= 0.10 ? 'Este píxel cuenta como quemado. Si cae en una nube sin enmascarar, el B12 sube y el dNBR sale falso.' : 'Este píxel no cuenta como quemado con los umbrales de Key y Benson.';
+    } else {
+      chip.querySelector('span').textContent = 'Sin cálculo';
+      $('#o-texto').textContent = 'B8A y B12 suman cero; sube alguno de los valores.';
+    }
+    drawRecta(dn);
+  }
+  ['b8pre', 'b12pre', 'b8post', 'b12post'].forEach(function (id) { $('#' + id).addEventListener('input', calc); });
+
+  /* ---------- economía ---------- */
+  var ECO = [
+    { n: 'Agropecuario', c: '--c-agro', p: 44.5 },
+    { n: 'Pastizal y herbazal', c: '--c-past', p: 31.7 },
+    { n: 'Bosque', c: '--c-bosque', p: 9.1 },
+    { n: 'Matorral', c: '--c-mat', p: 3.3 }
+  ];
+  var eco = { per: 't' };
+  function buildEco() {
+    var head = '<thead><tr><th>Cobertura</th><th>Valor (S/ por ha)</th><th>Fuente del valor</th><th>Ha afectadas</th><th>Valor (S/)</th></tr></thead>';
+    var rows = ECO.map(function (e, k) {
+      return '<tr><td><span class="sw" style="background:var(' + e.c + ')"></span>' + e.n + '</td>' +
+        '<td><input type="number" id="eco-v-' + k + '" min="0" step="any" inputmode="decimal" placeholder="Tu valor" aria-label="Valor por hectárea de ' + e.n + '"></td>' +
+        '<td><input type="text" id="eco-f-' + k + '" placeholder="Institución y año" aria-label="Fuente del valor de ' + e.n + '"></td>' +
+        '<td id="eco-ha-' + k + '"></td><td id="eco-s-' + k + '">–</td></tr>';
+    }).join('');
+    $('#eco-tabla').innerHTML = head + '<tbody>' + rows + '</tbody>';
+    $$('#eco-tabla input, #eco-pct').forEach(function (el) { el.addEventListener('input', renderEco); });
+  }
+  function renderEco() {
+    var pct = parseFloat($('#eco-pct').value);
+    $('#eco-pct-v').textContent = fmt(pct, 0) + ' %';
+    var div = eco.per === 'a' ? 12 : 1;
+    var total = 0, any = false, sin = [];
+    ECO.forEach(function (e, k) {
+      var ha = e.p / 100 * TOTAL / div;
+      $('#eco-ha-' + k).textContent = '≈ ' + fmt(Math.round(ha / 100) * 100, 0);
+      var v = parseFloat(String($('#eco-v-' + k).value).replace(',', '.'));
+      var f = $('#eco-f-' + k).value.trim();
+      if (isFinite(v) && v > 0) {
+        any = true;
+        var s = ha * v * pct / 100;
+        total += s;
+        $('#eco-s-' + k).textContent = s.toLocaleString('es', { maximumFractionDigits: 0 });
+        if (!f) sin.push(e.n.toLowerCase());
+      } else { $('#eco-s-' + k).textContent = '–'; }
+    });
+    $('#eco-total').textContent = any ? 'S/ ' + total.toLocaleString('es', { maximumFractionDigits: 0 }) : '–';
+    $('#eco-falta').textContent = sin.length ? 'Falta la fuente del valor de: ' + sin.join(', ') + '.' : (any ? '' : 'Escribe un valor por hectárea y su fuente para calcular.');
+  }
+  bindSeg('eco-per', function (v) { eco.per = v; renderEco(); });
+
+  /* ---------- navegación ---------- */
+  var links = $$('.barra nav a');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (ents) {
+      ents.forEach(function (en) {
+        if (en.isIntersecting) {
+          links.forEach(function (a) { if (a.getAttribute('href') === '#' + en.target.id) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    $$('main > section').forEach(function (s) { io.observe(s); });
+  }
+  document.addEventListener('keydown', function (e) {
+    var t = e.target;
+    if (t && /INPUT|SELECT|TEXTAREA/.test(t.tagName)) return;
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    var secs = $$('main > section');
+    var y = window.scrollY + 90, idx = 0;
+    secs.forEach(function (s, i) { if (s.getBoundingClientRect().top + window.scrollY <= y) idx = i; });
+    var next = Math.max(0, Math.min(secs.length - 1, idx + (e.key === 'ArrowRight' ? 1 : -1)));
+    secs[next].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    e.preventDefault();
+  });
+
+  /* ---------- inicio ---------- */
+  renderCob();
+  buildEco();
+  renderEco();
+  calc();
+})();
+
+</script>
+</body></html>

@@ -1,0 +1,17 @@
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+
+# Secretos y entornos (por si más adelante agregas código)
+.env
+.venv/
+__pycache__/
+node_modules/
+
+# Archivos temporales
+*.tmp
+*.log

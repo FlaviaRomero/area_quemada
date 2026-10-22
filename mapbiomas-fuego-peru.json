@@ -1,0 +1,71 @@
+{
+  "titulo": "Área quemada en el Perú por cobertura, región, departamento y mes",
+  "fuente_principal": "MapBiomas Perú, MapBiomas Fuego Perú, Colección 1 (2013-2024). Landsat 7, 8 y 9, 30 m. CC-BY.",
+  "revision": "2026-10-21",
+  "periodo": "2013-2024",
+  "area_quemada_total_ha": 2300000,
+  "nota_total": "Área quemada por primera vez, contada una sola vez en 12 años. Una infografía del mismo proyecto muestra 1,6 millones de ha como área neta; se usa 2,3 millones porque lo repiten Mongabay, la hoja de datos y el resumen.",
+  "cobertura_porcentaje_del_area_quemada": {
+    "Mosaico agropecuario": 38.3,
+    "Pastizal / herbazal": 31.7,
+    "Otra formación no boscosa": 6.3,
+    "Bosque": 6.1,
+    "Pasto": 4.2,
+    "Matorral": 3.3,
+    "Bosque seco": 3.0,
+    "Zona pantanosa": 2.6,
+    "Agricultura": 2.0,
+    "Otros": 1.5,
+    "Área sin vegetación": 1.0
+  },
+  "grupos_usados_en_la_pagina": {
+    "Agropecuario": { "porcentaje": 44.5, "incluye": ["Mosaico agropecuario", "Pasto", "Agricultura"] },
+    "Pastizal y herbazal": { "porcentaje": 31.7, "incluye": ["Pastizal / herbazal"] },
+    "Bosque": { "porcentaje": 9.1, "incluye": ["Bosque", "Bosque seco"] },
+    "Matorral": { "porcentaje": 3.3, "incluye": ["Matorral"] },
+    "Otras coberturas": { "porcentaje": 11.4, "incluye": ["Otra formación no boscosa", "Zona pantanosa", "Otros", "Área sin vegetación"] }
+  },
+  "natural_vs_uso_porcentaje": { "natural": 54, "uso_antropico": 46 },
+  "regiones_naturales": [
+    { "nombre": "Amazonía", "porcentaje_nacional": 53, "ha": "1,2 millones", "natural": 28.3, "uso": 71.7 },
+    { "nombre": "Andes", "porcentaje_nacional": 44, "ha": "1,0 millones", "natural": 86.5, "uso": 13.5 },
+    { "nombre": "Bosque seco ecuatorial", "porcentaje_nacional": 2, "ha": "42,3 mil", "natural": 47.2, "uso": 52.8 },
+    { "nombre": "Desierto costero", "porcentaje_nacional": 1, "ha": "26,9 mil", "natural": 2.1, "uso": 97.9 }
+  ],
+  "departamentos_miles_de_ha_2013_2024": {
+    "Ucayali": 350.6,
+    "Puno": 295.1,
+    "Huánuco": 252.0,
+    "Cusco": 230.0,
+    "Madre de Dios": 154.7,
+    "Junín": 143.9,
+    "Cajamarca": 132.2,
+    "Áncash": 88.6,
+    "San Martín": 86.3,
+    "La Libertad": 76.1
+  },
+  "meses_porcentaje_del_area_quemada": {
+    "Jul": 6.0,
+    "Ago": 16.1,
+    "Sep": 27.3,
+    "Oct": 22.2,
+    "Nov": 13.6,
+    "nota": "Meses asignados según el orden de la infografía. El 79 % entre agosto y noviembre está dicho de forma explícita."
+  },
+  "hitos": {
+    "peor_anio": { "anio": 2022, "miles_de_ha_nuevas": 314.1 },
+    "segundo_anio": { "anio": 2024, "miles_de_ha_nuevas": 262.1 },
+    "peor_mes": { "mes": "octubre de 2024", "miles_de_ha": 151.3 }
+  },
+  "calculos_propios": {
+    "cuatro_departamentos_principales_porcentaje": "(350,6 + 295,1 + 252,0 + 230,0) / 2300 = 49 %",
+    "hectareas_por_cobertura": "porcentaje de cobertura x 2 300 000 ha"
+  },
+  "fuentes": [
+    "https://peru.mapbiomas.org/wp-content/uploads/sites/14/2025/10/FACTSHEET-FUEGO.pdf",
+    "https://peru.mapbiomas.org/wp-content/uploads/sites/14/2025/10/Onesheet-fuego.pdf",
+    "https://peru.mapbiomas.org/wp-content/uploads/sites/6/2026/08/Copia-de-MBI-infografia-peru-fuego-2025-ES-PRINT.pdf",
+    "https://es.mongabay.com/2025/12/incendios-forestales-millones-hectareas-quemadas-peru/",
+    "https://rpp.pe/peru/actualidad/en-el-peru-la-superficie-quemada-en-12-anos-es-diez-veces-mayor-que-la-extension-de-lima-metropolitana-noticia-1661625"
+  ]
+}
