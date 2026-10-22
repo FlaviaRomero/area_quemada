@@ -1,8 +1,7 @@
 # ¿Qué se quemó en el Perú? Cobertura del suelo de las áreas quemadas, 2013–2024
 
-**Autor:** [Tu nombre completo]. [Curso], [Universidad], [fecha].
+**Autor:** FLAVIA ROMERO 
 
-**Página:** [¿Qué se quemó en el Perú?](https://TU-USUARIO.github.io/que-se-quemo-peru/), un recorrido con cifras y gráficos de qué cobertura tenía el área quemada.
 
 ## Pregunta
 
