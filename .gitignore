@@ -15,3 +15,7 @@ node_modules/
 # Archivos temporales
 *.tmp
 *.log
+
+# Datos pesados de entrada (se descargan aparte)
+*.tif
+*.gpkg

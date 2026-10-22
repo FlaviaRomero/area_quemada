@@ -17,8 +17,10 @@
 | Cobertura de 10 m | ESA WorldCover (2020 v100, 2021 v200) | Método para medir un incendio concreto |
 | Nubes y sombras | Sentinel-2 L2A, capa SCL | Método para medir un incendio concreto |
 | Focos de calor | NASA FIRMS, VIIRS | Método para medir un incendio concreto |
+| Área quemada acumulada 2013–2024 (ráster 0/1, 30 m) | MapBiomas Fuego Perú, Colección 1 | Mapa 3D |
+| Límites departamentales | GADM 4.1 (`gadm41_PER.gpkg`) | Mapa 3D |
 
-Las cifras usadas están en `data/mapbiomas-fuego-peru.json`, cada una con su fuente.
+Las cifras usadas están en `data/mapbiomas-fuego-peru.json`, cada una con su fuente. Los datos del mapa 3D están en `data/geo-mapa3d.json`.
 
 ## Método
 
@@ -33,7 +35,28 @@ Para un incendio concreto, el camino es:
 5. Contar hectáreas por cobertura, severidad y distrito (cada píxel de 10 m son 0,01 ha).
 6. Multiplicar por un valor por hectárea con fuente.
 
+## Mapa 3D
+
+El ráster acumulado marca cada píxel de 30 m como quemado o no quemado al menos una vez entre 2013 y 2024 (suma: 2 305 073 ha). `pipeline/preparar_mapa3d.py` lo procesa en cuatro pasos:
+
+1. Lee el GeoTIFF (teselas LZW) con un lector propio, sin GDAL, y suma los píxeles quemados en bloques de 8 × 8 (240 m). La hectárea por píxel se corrige por la latitud.
+2. Asigna cada bloque a un departamento (GADM, capa `ADM_ADM_1`) y suma las hectáreas. La provincia de Lima se une a Lima. Suma de departamentos: 2 304 928 ha, el 99,99 % del total.
+3. Simplifica los límites con Douglas-Peucker (0,012°, cerca de 1 km) y descarta islotes menores a unos 45 km².
+4. Agrupa los bloques en celdas de unos 10 km para las columnas (se guardan las de 30 ha o más: 98,9 % del área).
+
+La escena se dibuja en un `<canvas>` con proyección propia, sin librerías. Se puede girar, inclinar, exagerar la altura y leer cada departamento o celda.
+
+Comprobación: las hectáreas medidas coinciden con las publicadas por MapBiomas (2013–2024) dentro de ±0,6 % en siete de los diez primeros departamentos. Las mayores diferencias son Huánuco (−3,6 %), Ucayali (+2,2 %) y Junín (−1,1 %), que pueden venir de los límites usados o del método.
+
+```
+python pipeline/preparar_mapa3d.py RUTA_AL_TIF RUTA_AL_GPKG
+```
+
+Requiere `numpy`, `pillow` y `tifffile`. Los archivos de entrada no se suben al repositorio por su tamaño.
+
 ## Limitaciones
+
+- El mapa 3D usa la capa acumulada, que no separa los años. La evolución año por año necesita los ráster anuales de MapBiomas Fuego.
 
 - El total de 2,3 millones de hectáreas es área quemada por primera vez. Una infografía del mismo proyecto muestra 1,6 millones como área neta.
 - Los meses se asignan según el orden de la infografía de MapBiomas; el 79 % entre agosto y noviembre sí está dicho de forma explícita.
@@ -47,7 +70,13 @@ Para un incendio concreto, el camino es:
 ├── docs/
 │   └── index.html                  Página completa (HTML, CSS y JavaScript en un archivo)
 ├── data/
-│   └── mapbiomas-fuego-peru.json   Cifras usadas, con su fuente
+│   ├── mapbiomas-fuego-peru.json   Cifras usadas, con su fuente
+│   └── geo-mapa3d.json             Departamentos, hectáreas y columnas del mapa 3D
+├── pipeline/
+│   ├── preparar_mapa3d.py          Del ráster y los límites al JSON del mapa 3D
+│   ├── lzwtif.py                   Lector de GeoTIFF con teselas LZW
+│   ├── geoproc.py                  Lectura de GeoPackage y simplificación de líneas
+│   └── requirements.txt
 ├── .gitignore
 └── README.md
 ```
@@ -61,6 +90,7 @@ Abre `docs/index.html` con doble clic. Con internet carga la tipografía de Goog
 - MapBiomas Perú: https://peru.mapbiomas.org
 - Key, C. H. y Benson, N. C. (2006). Landscape Assessment (LA). En FIREMON, USDA Forest Service, RMRS-GTR-164-CD.
 - Zanaga, D. et al. (2022). ESA WorldCover 10 m 2021 v200. https://doi.org/10.5281/zenodo.7254221
+- GADM 4.1, límites administrativos del Perú: https://gadm.org
 - Mongabay Latam (diciembre de 2025): https://es.mongabay.com/2025/12/incendios-forestales-millones-hectareas-quemadas-peru/
 
 ## Licencia
